@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://byiol3wynkwyr"]
+
+[ext_resource type="Texture2D" uid="uid://c31ssc70ce45" path="res://icon.svg" id="1_7m8uc"]
+[ext_resource type="Script" uid="uid://u1gxg0fjvuaj" path="res://scripts/Stubby/stubby.gd" id="1_xhkw8"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_xhkw8"]
+bounce = 0.06
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xhkw8"]
+radius = 60.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rd5jo"]
+radius = 67.42
+
+[node name="Stubby" type="Node2D"]
+script = ExtResource("1_xhkw8")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_xhkw8")
+
+[node name="Sprite2D" type="Sprite2D" parent="RigidBody2D"]
+texture = ExtResource("1_7m8uc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+shape = SubResource("CircleShape2D_xhkw8")
+
+[node name="ClickArea" type="Area2D" parent="RigidBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D/ClickArea"]
+shape = SubResource("CircleShape2D_rd5jo")
+
+[connection signal="mouse_entered" from="RigidBody2D/ClickArea" to="." method="_on_area_mouse_entered"]
+[connection signal="mouse_exited" from="RigidBody2D/ClickArea" to="." method="_on_area_mouse_exited"]

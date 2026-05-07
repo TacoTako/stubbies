@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b6n06vuxi0r2"]
+
+[ext_resource type="Script" uid="uid://0753gestcpfg" path="res://scripts/Utils/click_manager.gd" id="1_s0scq"]
+
+[node name="ClickManager" type="Node"]
+script = ExtResource("1_s0scq")
