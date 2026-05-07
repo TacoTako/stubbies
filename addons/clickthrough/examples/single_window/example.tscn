@@ -1,25 +1,25 @@
-[gd_scene load_steps=6 format=3 uid="uid://dfb5nqnjgjpva"]
+[gd_scene format=3 uid="uid://dfb5nqnjgjpva"]
 
-[ext_resource type="Texture2D" uid="uid://crlrvohm2m7l7" path="res://icon.svg" id="1_f0jmc"]
+[ext_resource type="Texture2D" uid="uid://c31ssc70ce45" path="res://icon.svg" id="1_f0jmc"]
 [ext_resource type="PackedScene" uid="uid://blkxbgp2i3glp" path="res://addons/clickthrough/nodes/clickthrough_gdscript/clickthrough_gdscript.tscn" id="2_6xmh1"]
-[ext_resource type="Script" path="res://addons/clickthrough/examples/example_icon.gd" id="2_spq04"]
+[ext_resource type="Script" uid="uid://c5c8feduoos3r" path="res://addons/clickthrough/examples/example_icon.gd" id="2_spq04"]
 [ext_resource type="PackedScene" uid="uid://dgvbaum76wg1i" path="res://addons/clickthrough/detection/transparent/transparent_detector.tscn" id="4_rwt05"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m2cmf"]
 size = Vector2(128, 128)
 
-[node name="Example" type="Node2D"]
+[node name="Example" type="Node2D" unique_id=1420390285]
 
-[node name="Icon" type="Sprite2D" parent="."]
+[node name="Icon" type="Sprite2D" parent="." unique_id=1847359746]
 position = Vector2(162, 115)
 texture = ExtResource("1_f0jmc")
 script = ExtResource("2_spq04")
 
-[node name="Area2D" type="Area2D" parent="Icon"]
+[node name="Area2D" type="Area2D" parent="Icon" unique_id=1407149500]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Icon/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Icon/Area2D" unique_id=1654578995]
 shape = SubResource("RectangleShape2D_m2cmf")
 
-[node name="Clickthrough" parent="." instance=ExtResource("2_6xmh1")]
+[node name="Clickthrough" parent="." unique_id=68754412 instance=ExtResource("2_6xmh1")]
 
-[node name="TransparentDetector" parent="Clickthrough" instance=ExtResource("4_rwt05")]
+[node name="TransparentDetector" parent="Clickthrough" unique_id=444574408 instance=ExtResource("4_rwt05")]

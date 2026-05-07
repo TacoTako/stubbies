@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://blkxbgp2i3glp"]
+[gd_scene format=3 uid="uid://blkxbgp2i3glp"]
 
-[ext_resource type="Script" path="res://addons/clickthrough/nodes/clickthrough_gdscript/clickthrough_gdscript.gd" id="1_l4q5i"]
+[ext_resource type="Script" uid="uid://byfj6neiyhhly" path="res://addons/clickthrough/nodes/clickthrough_gdscript/clickthrough_gdscript.gd" id="1_l4q5i"]
 
-[node name="Clickthrough" type="Node"]
+[node name="Clickthrough" type="Node" unique_id=12377890]
 script = ExtResource("1_l4q5i")

@@ -16,13 +16,15 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 config/name="Stubbies"
 run/main_scene="uid://disva5ixur0fi"
-config/features=PackedStringArray("4.4", "GL Compatibility")
+config/features=PackedStringArray("4.6", "C#", "GL Compatibility")
 boot_splash/bg_color=Color(0.141176, 0.141176, 0.141176, 0)
 config/icon="res://icon.svg"
 
 [autoload]
 
 SignalBus="*res://scenes/Utils/signal_bus.tscn"
+ClickthroughCSharp="*uid://c2r67bcbvq27q"
+ClickthroughGdscript="*uid://ca567l5x4m60t"
 
 [display]
 
@@ -38,6 +40,10 @@ window/per_pixel_transparency/allowed=true
 [dotnet]
 
 project/assembly_name="Stubbies"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/clickthrough/plugin.cfg")
 
 [input]
 

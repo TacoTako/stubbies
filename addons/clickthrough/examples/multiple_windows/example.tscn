@@ -1,11 +1,11 @@
 [gd_scene load_steps=8 format=3 uid="uid://bosbfg5o0uwlb"]
 
-[ext_resource type="Script" uid="uid://c7nxqh1hor3kl" path="res://addons/clickthrough/nodes/clickthrough_gdscript/clickthrough_gdscript.gd" id="1_x62ys"]
+[ext_resource type="Script" path="res://addons/clickthrough/nodes/clickthrough_gdscript/clickthrough_gdscript.gd" id="1_x62ys"]
 [ext_resource type="PackedScene" uid="uid://bcxwso7cge4dc" path="res://addons/clickthrough/detection/area/area_detector.tscn" id="2_h64ku"]
 [ext_resource type="PackedScene" uid="uid://blkxbgp2i3glp" path="res://addons/clickthrough/nodes/clickthrough_gdscript/clickthrough_gdscript.tscn" id="3_7g5le"]
-[ext_resource type="Script" uid="uid://dw430bjeb02e3" path="res://addons/clickthrough/examples/example_icon.gd" id="4_8dtw3"]
+[ext_resource type="Script" path="res://addons/clickthrough/examples/example_icon.gd" id="4_8dtw3"]
 [ext_resource type="PackedScene" uid="uid://dgvbaum76wg1i" path="res://addons/clickthrough/detection/transparent/transparent_detector.tscn" id="4_j8qig"]
-[ext_resource type="Texture2D" uid="uid://c31ssc70ce45" path="res://icon.svg" id="5_cf4y8"]
+[ext_resource type="Texture2D" uid="uid://crlrvohm2m7l7" path="res://icon.svg" id="5_cf4y8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c0p6e"]
 size = Vector2(128, 128)
