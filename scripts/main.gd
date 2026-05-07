@@ -1,13 +1,16 @@
 extends Node2D
+class_name Main
 
-@onready var transparent_window: Node
+func _ready():
+	update_window_size()
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	transparent_window = get_tree().get_first_node_in_group("transparent_window")
-	if transparent_window != null:
-		transparent_window.SetClickThrough(true)
+func _notification(what):
+	if what == NOTIFICATION_WM_SIZE_CHANGED:
+		# Optional: if you want to react to manual resizing too
+		update_window_size()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func update_window_size():
+	var screen_size = DisplayServer.screen_get_usable_rect().size
+	DisplayServer.window_set_size(screen_size)
+	self.get_node("Boundaries/Floor").position.y = screen_size.y
+	self.get_node("Boundaries/Right Wall").position.x = screen_size.x
