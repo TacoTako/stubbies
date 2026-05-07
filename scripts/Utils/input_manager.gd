@@ -1,11 +1,11 @@
-extends Node
+extends Node2D
 class_name InputManager
 
 signal left_mouse_released
 signal right_mouse_released
 
-const GUY_COLLISION_MASK = 1
-const FURNITURE_COLLISION_MASK = 2
+const GUY_COLLISION_MASK = 2
+const FURNITURE_COLLISION_MASK = 4
 
 #const BUILDING_COLLISION_MASK = 4
 #const PACK_COLLISION_MASK = 8
@@ -49,51 +49,33 @@ func left_click_logic(result) -> void:
 	#AudioManager.play_sfx("click", 0.7)
 	match result_mask:
 		GUY_COLLISION_MASK:
-			if result_found.dissolving:
-				return
-			var card_manager = result_found.get_parent()
-			card_manager.start_drag(result_found)
+			var click_manager = result_found.get_parent()
+			print(click_manager)
+			click_manager.start_drag(result_found)
 		FURNITURE_COLLISION_MASK:
-			var card_manager = result_found.get_parent()
-			card_manager.start_drag(result_found)
-		#SET_COLLISION_MASK:
-			#var pack = result_found.get_parent()
-			#pack.select_option(result_found)
-			#curr_mask = MASKS.get("all")
-		#BUILDING_COLLISION_MASK:
-			#result_found.get_node("JiggleAnimation").play("jiggle")
-		#COMPENDIUM_COLLISION_MASK:
-			#Signalbus.open_compendium.emit("")
-			#curr_mask = MASKS.get("none")
+			var click_manager = result_found.get_parent()
+			click_manager.start_drag(result_found)
 
 func right_click_logic(result) -> void:
 	var result_mask = result.collision_mask
 	var result_found = result.get_parent()
 	match result_mask:
 		GUY_COLLISION_MASK:
-			var card_manager = result_found.get_parent()
-			card_manager.finish_drag(false)
+			var click_manager = result_found.get_parent()
+			click_manager.finish_drag(false)
 		FURNITURE_COLLISION_MASK:
 			#AudioManager.play_sfx("click", 0.5)
 			if result_found.choose_or_open():
 				curr_mask = MASKS.get("set_only")
 			
-			var card_manager = result_found.get_parent()
-			card_manager.finish_drag(false)
+			var click_manager = result_found.get_parent()
+			click_manager.finish_drag(false)
 
 func middle_click_logic(result) -> void:
 	var result_mask = result.collision_mask
 	var result_found = result.get_parent()
 	match result_mask:
-		CARD_COLLISION_MASK:
-			var card_manager = result_found.get_parent()
-			card_manager.highlight_card(result_found, false)
-			#TODO : Remember to fix this once id_name is running
-			var card_name = result_found.carddata_id
-			Signalbus.open_compendium.emit(card_name)
-		BUILDING_COLLISION_MASK:
-			var card_name = result_found.name
-			Signalbus.open_compendium.emit(card_name)
+		pass
 
 func raycast_and_click(mask, input_type : int):
 	var space_state : PhysicsDirectSpaceState2D = get_world_2d().direct_space_state
@@ -105,8 +87,6 @@ func raycast_and_click(mask, input_type : int):
 	params.collision_mask = mask 
 	var result = space_state.intersect_point(params)
 	if result.size() <= 0 :
-		if input_type == InputType.LEFT_CLICK and camera_enabled:
-				camera_ref.start_camera_drag()
 		return
 	result = topmost(result).collider
 	match input_type:
@@ -130,22 +110,12 @@ func topmost(result_arr):
 	return top
 
 func _ready() -> void:
-	Signalbus.connect("close_compendium", close_compendium)
-	Signalbus.connect("change_input_mask", change_input_mask)
-	Signalbus.connect("pause_input", pause_input)
-	Signalbus.connect("resume_input", resume_input)
-	
+	pass
 
-func close_compendium():
-	resume_input()
-	
 func change_input_mask(mask):
 	curr_mask = mask
 
 func pause_input():
-	prev_camera_state = camera_enabled
-	camera_enabled = false
-	
 	if curr_mask != MASKS.get("none"):
 		paused_mask = curr_mask
 	
@@ -153,4 +123,3 @@ func pause_input():
 
 func resume_input():
 	curr_mask = paused_mask
-	camera_enabled = prev_camera_state

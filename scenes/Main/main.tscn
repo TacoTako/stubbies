@@ -1,26 +1,56 @@
-[gd_scene load_steps=5 format=3 uid="uid://disva5ixur0fi"]
+[gd_scene load_steps=11 format=3 uid="uid://disva5ixur0fi"]
 
 [ext_resource type="Texture2D" uid="uid://c31ssc70ce45" path="res://icon.svg" id="1_br8qb"]
 [ext_resource type="PackedScene" uid="uid://byiol3wynkwyr" path="res://scenes/Stubby/stubby.tscn" id="1_gol0p"]
+[ext_resource type="Script" uid="uid://c6dtmna2oqmlj" path="res://scripts/main.gd" id="1_px18m"]
+[ext_resource type="Script" uid="uid://c7nxqh1hor3kl" path="res://addons/clickthrough/nodes/clickthrough_gdscript/clickthrough_gdscript.gd" id="4_rdp1x"]
+[ext_resource type="PackedScene" uid="uid://bcxwso7cge4dc" path="res://addons/clickthrough/detection/area/area_detector.tscn" id="5_nyu32"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3fr54"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_px18m"]
-size = Vector2(2000, 36.825)
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_br8qb"]
+normal = Vector2(1, 0)
+distance = -900.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_px18m"]
+normal = Vector2(-1.4, 0)
+distance = -727.33
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_8gcrf"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_br8qb"]
+bounce = 0.1
 
 [node name="Main" type="Node2D"]
+script = ExtResource("1_px18m")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(900, 1080)
 physics_material_override = SubResource("PhysicsMaterial_3fr54")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-shape = SubResource("RectangleShape2D_px18m")
+[node name="Left Wall" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("WorldBoundaryShape2D_br8qb")
+debug_color = Color(0.231153, 0.584582, 0.700387, 0.42)
+
+[node name="Right Wall" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("WorldBoundaryShape2D_px18m")
+debug_color = Color(0.231153, 0.584582, 0.700387, 0.42)
+
+[node name="Floor" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("WorldBoundaryShape2D_8gcrf")
 debug_color = Color(0.231153, 0.584582, 0.700387, 0.42)
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
+visible = false
 scale = Vector2(22.34, 0.385)
 texture = ExtResource("1_br8qb")
 
-[node name="Node2D" parent="." instance=ExtResource("1_gol0p")]
+[node name="Stubby" parent="." instance=ExtResource("1_gol0p")]
 position = Vector2(763, 373)
+physics_material_override = SubResource("PhysicsMaterial_br8qb")
+
+[node name="Clickthrough" type="Node" parent="."]
+script = ExtResource("4_rdp1x")
+window_mode = 4
+
+[node name="AreaDetector" parent="Clickthrough" instance=ExtResource("5_nyu32")]
