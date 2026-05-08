@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://byiol3wynkwyr"]
+[gd_scene format=3 uid="uid://byiol3wynkwyr"]
 
 [ext_resource type="Texture2D" uid="uid://c31ssc70ce45" path="res://icon.svg" id="1_7m8uc"]
 [ext_resource type="Script" uid="uid://u1gxg0fjvuaj" path="res://scripts/Stubby/stubby.gd" id="1_xhkw8"]
@@ -9,21 +9,23 @@ radius = 67.42
 [sub_resource type="CircleShape2D" id="CircleShape2D_xhkw8"]
 radius = 60.0
 
-[node name="Stubby" type="RigidBody2D"]
+[node name="Stubby" type="RigidBody2D" unique_id=932902156]
 lock_rotation = true
+contact_monitor = true
+max_contacts_reported = 4
 script = ExtResource("1_xhkw8")
 
-[node name="ClickArea" type="Area2D" parent="."]
+[node name="ClickArea" type="Area2D" parent="." unique_id=1420248561]
 collision_layer = 2
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ClickArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClickArea" unique_id=739962353]
 shape = SubResource("CircleShape2D_rd5jo")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=696070912]
 texture = ExtResource("1_7m8uc")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2097494109]
 shape = SubResource("CircleShape2D_xhkw8")
 
 [connection signal="mouse_entered" from="ClickArea" to="." method="_on_area_mouse_entered"]
