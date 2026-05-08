@@ -1,2 +1,2 @@
-# stubbies
-Desktop game project
+# Stubbies
+> Study buddy desktop pets
