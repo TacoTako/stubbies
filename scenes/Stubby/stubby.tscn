@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://byiol3wynkwyr"]
 
 [ext_resource type="Texture2D" uid="uid://c31ssc70ce45" path="res://icon.svg" id="1_7m8uc"]
-[ext_resource type="Script" uid="uid://u1gxg0fjvuaj" path="res://scripts/Stubby/stubby.gd" id="1_xhkw8"]
+[ext_resource type="Script" uid="uid://u1gxg0fjvuaj" path="res://scripts/Pet/pet.gd" id="1_xhkw8"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rd5jo"]
 radius = 67.42

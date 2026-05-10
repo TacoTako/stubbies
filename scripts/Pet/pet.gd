@@ -1,5 +1,5 @@
 extends DraggableObject
-class_name Stubby
+class_name Pet
 
 @onready var sprite := get_node("Sprite2D")
 
@@ -21,8 +21,8 @@ func _integrate_forces(state):
 		var normal = state.get_contact_local_normal(i)
 
 		# Normalize collision force
-		var x_force = clamp(abs(linear_velocity.x) / 600.0, 0.0, 1.0)
-		var y_force = clamp(abs(linear_velocity.y) / 600.0, 0.0, 1.0)
+		var x_force = clamp(abs(linear_velocity.x) / 600.0, 0.0, 2.0)
+		var y_force = clamp(abs(linear_velocity.y) / 600.0, 0.0, 2.0)
 		# Floor / ceiling hit
 		if abs(normal.y) > 0.7:
 			squash(y_force, false)
