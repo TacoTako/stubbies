@@ -2,12 +2,16 @@ extends DraggableObject
 class_name Pet
 
 @onready var sprite := get_node("Sprite2D")
+@onready var state : PetState = FallState.new(self)
+
+@onready var state_label := get_node("Sprite2D/StateDebug")
 
 @export var squash_strength := 1.2
 
 var target_scale := Vector2.ONE
 
 func _ready():
+	state.enter_state()
 	pass
 
 func _process(delta):
@@ -15,6 +19,7 @@ func _process(delta):
 	sprite.scale = scale.lerp(target_scale, delta * 15.0)
 	# Slowly return to normal size
 	target_scale = target_scale.lerp(Vector2.ONE, delta * 10.0)
+	state.handle_state()
 
 func _integrate_forces(state):
 	for i in state.get_contact_count():
@@ -33,6 +38,19 @@ func _integrate_forces(state):
 
 		# Only trigger once per frame
 		break
+
+func set_state(new_state : PetState) -> void:
+	self.state = new_state
+	state.enter_state()
+
+func start_drag() -> void:
+	super.start_drag()
+	state.interrupt()
+	state.transition(DragState.new(self))
+
+func finish_drag() -> void:
+	super.finish_drag()
+	state.transition(FallState.new(self))
 
 func squash(force : float, vertical : bool) -> void:
 	var squash_amount = force * squash_strength

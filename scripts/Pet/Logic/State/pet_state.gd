@@ -12,6 +12,10 @@ func _init():
 func enter_state() -> void:
 	push_error("Not implemented")
 
+## called every frame
+func handle_state() -> void:
+	push_error("Not implemented")
+
 ## called when state is forcefully interrupted (by dragging or otherwise)
 func interrupt() -> void:
 	push_error("Not implemented")
@@ -22,4 +26,7 @@ func exit_state() -> void:
 
 ## transitions this state to input state
 func transition(next : PetState) -> void:
-	push_error("Not implemented")
+	exit_state()
+	pet.set_state(next)
+	next.enter_state()
+	self.queue_free()

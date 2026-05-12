@@ -17,16 +17,11 @@ func _input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 
-			# START DRAG
 			if event.pressed and hovered:
-				dragging = true
-				freeze = true
+				start_drag()
 
-			# RELEASE DRAG
 			elif !event.pressed and dragging:
-				dragging = false
-				freeze = false
-				linear_velocity = tracked_velocity * release_velocity_multiplier
+				finish_drag()
 
 func _physics_process(delta):
 	if dragging:
@@ -41,6 +36,15 @@ func _physics_process(delta):
 		tracked_velocity = (global_position - last_position) / delta
 	
 	last_position = global_position
+
+func start_drag() -> void:
+	dragging = true
+	freeze = true
+
+func finish_drag() -> void:
+	dragging = false
+	freeze = false
+	linear_velocity = tracked_velocity * release_velocity_multiplier
 
 func _on_area_mouse_entered() -> void:
 	hovered = true
