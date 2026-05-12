@@ -1,16 +1,17 @@
 extends DraggableObject
 class_name Pet
 
-@onready var sprite := get_node("Sprite2D")
+@onready var sprite := $Sprite2D
 @onready var state : PetState = FallState.new(self)
 
-@onready var state_label := get_node("Sprite2D/StateDebug")
+@onready var state_label := $Sprite2D/StateDebug
 
 @export var squash_strength := 1.2
 
 var target_scale := Vector2.ONE
 
 func _ready():
+	super._ready()
 	state.enter_state()
 	pass
 

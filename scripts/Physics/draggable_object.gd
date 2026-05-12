@@ -4,6 +4,10 @@ class_name DraggableObject
 @export var follow_speed := 35.0
 @export var release_velocity_multiplier := 1.0
 
+@onready var collision := $CollisionShape2D
+var x_margin := 0.0
+var y_margin := 0.0
+
 var dragging := false
 var hovered := false
 
@@ -11,6 +15,16 @@ var tracked_velocity := Vector2.ZERO
 var last_position := Vector2.ZERO
 
 func _ready() -> void:
+	if collision.shape is CircleShape2D:
+		x_margin = collision.shape.radius
+		y_margin = collision.shape.radius
+		print("cir")
+	if collision.shape is RectangleShape2D:
+		x_margin = collision.shape.size.x * 0.5
+		y_margin = collision.shape.size.y * 0.5
+		print("rec")
+	print(x_margin, y_margin)
+	
 	last_position = global_position
 
 func _input(event):
@@ -25,7 +39,7 @@ func _input(event):
 
 func _physics_process(delta):
 	if dragging:
-		var mouse_pos = get_global_mouse_position()
+		var mouse_pos = get_restricted_mouse_pos()
 		# Smooth direct movement
 		global_position = global_position.lerp(
 			mouse_pos,
@@ -36,6 +50,21 @@ func _physics_process(delta):
 		tracked_velocity = (global_position - last_position) / delta
 	
 	last_position = global_position
+
+func get_restricted_mouse_pos() -> Vector2:
+	var mouse_pos = get_global_mouse_position()
+	mouse_pos.x = clamp(
+		mouse_pos.x,
+		0 + x_margin,
+		ScreenSize.screen_size.x - x_margin
+		)
+		
+	mouse_pos.y = clamp(
+		mouse_pos.y,
+		0 + y_margin,
+		ScreenSize.screen_size.y - y_margin
+		)
+	return mouse_pos
 
 func start_drag() -> void:
 	dragging = true

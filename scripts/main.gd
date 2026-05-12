@@ -1,11 +1,14 @@
 extends Node2D
 class_name Main
 
-func _ready():
-	update_window_size()
+@onready var floor := $Boundaries/Floor
+@onready var right_wall := $Boundaries/RightWall
 
-func update_window_size():
-	var screen_size = DisplayServer.screen_get_usable_rect().size
-	DisplayServer.window_set_size(screen_size)
-	self.get_node("Boundaries/Floor").position.y = screen_size.y
-	self.get_node("Boundaries/Right Wall").position.x = screen_size.x
+func _ready():
+	update_stage_size()
+
+func update_stage_size():
+	var size := ScreenSize.screen_size
+	DisplayServer.window_set_size(size)
+	self.floor.position.y = size.y
+	self.right_wall.position.x = size.x

@@ -25,11 +25,11 @@ script = ExtResource("1_px18m")
 [node name="Boundaries" type="StaticBody2D" parent="." unique_id=436553749]
 physics_material_override = SubResource("PhysicsMaterial_3fr54")
 
-[node name="Left Wall" type="CollisionShape2D" parent="Boundaries" unique_id=1819306842]
+[node name="LeftWall" type="CollisionShape2D" parent="Boundaries" unique_id=1819306842]
 shape = SubResource("WorldBoundaryShape2D_br8qb")
 debug_color = Color(0.231153, 0.584582, 0.700387, 0.42)
 
-[node name="Right Wall" type="CollisionShape2D" parent="Boundaries" unique_id=784738188]
+[node name="RightWall" type="CollisionShape2D" parent="Boundaries" unique_id=784738188]
 position = Vector2(1920, 0)
 shape = SubResource("WorldBoundaryShape2D_px18m")
 debug_color = Color(0.231153, 0.584582, 0.700387, 0.42)
@@ -47,6 +47,8 @@ texture = ExtResource("1_br8qb")
 [node name="Stubby" parent="." unique_id=1583577680 instance=ExtResource("1_gol0p")]
 position = Vector2(763, 373)
 physics_material_override = SubResource("PhysicsMaterial_br8qb")
+squash_strength = 1.2
+release_velocity_multiplier = 1.0
 
 [node name="Clickthrough" parent="." unique_id=2006023397 instance=ExtResource("4_rdp1x")]
 

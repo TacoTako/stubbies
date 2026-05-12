@@ -3,6 +3,7 @@ class_name DragState
 ## PetState acts as an abstract class for other states
 
 func _init(pet : Pet):
+	set_process(false)
 	self.pet = pet
 
 ## sets up data before entering state 
