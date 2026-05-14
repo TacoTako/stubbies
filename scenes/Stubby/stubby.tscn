@@ -2,6 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://c31ssc70ce45" path="res://icon.svg" id="1_7m8uc"]
 [ext_resource type="Script" uid="uid://u1gxg0fjvuaj" path="res://scripts/Pet/pet.gd" id="1_xhkw8"]
+[ext_resource type="PackedScene" uid="uid://bhw2fq18vtdmc" path="res://scenes/Menu/radial_menu.tscn" id="3_l678s"]
+[ext_resource type="PackedScene" uid="uid://458xvfxcda2s" path="res://scenes/Menu/menu_button.tscn" id="3_rd5jo"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_xhkw8"]
 bounce = 0.2
@@ -19,9 +21,7 @@ lock_rotation = true
 contact_monitor = true
 max_contacts_reported = 4
 script = ExtResource("1_xhkw8")
-squash_strength = null
 follow_speed = 30.0
-release_velocity_multiplier = null
 
 [node name="ClickArea" type="Area2D" parent="." unique_id=1420248561]
 collision_layer = 2
@@ -41,6 +41,23 @@ text = "State"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2097494109]
 shape = SubResource("CircleShape2D_xhkw8")
+
+[node name="RadialMenu" parent="." unique_id=1619956170 instance=ExtResource("3_l678s")]
+
+[node name="Button2D" parent="RadialMenu" unique_id=40276906 instance=ExtResource("3_rd5jo")]
+button_name = "Placeholder1"
+
+[node name="Button2D2" parent="RadialMenu" unique_id=563306086 instance=ExtResource("3_rd5jo")]
+button_name = "Placeholder2"
+
+[node name="Button2D3" parent="RadialMenu" unique_id=1866743332 instance=ExtResource("3_rd5jo")]
+button_name = "Placeholder3"
+
+[node name="Button2D4" parent="RadialMenu" unique_id=93036910 instance=ExtResource("3_rd5jo")]
+button_name = "Placeholder4"
+
+[node name="Button2D5" parent="RadialMenu" unique_id=323251924 instance=ExtResource("3_rd5jo")]
+button_name = "Placeholder5"
 
 [connection signal="mouse_entered" from="ClickArea" to="." method="_on_area_mouse_entered"]
 [connection signal="mouse_exited" from="ClickArea" to="." method="_on_area_mouse_exited"]

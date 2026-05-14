@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://458xvfxcda2s"]
+
+[ext_resource type="Script" uid="uid://bxemjt13fdi7n" path="res://scripts/Menu/radial_menu_button.gd" id="1_0g73s"]
+
+[node name="Button2D" type="Node2D" unique_id=40276906]
+script = ExtResource("1_0g73s")
+
+[node name="Button" type="Button" parent="." unique_id=1372122068]
+process_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Hii"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

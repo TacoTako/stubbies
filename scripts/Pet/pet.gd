@@ -3,7 +3,7 @@ class_name Pet
 
 @onready var sprite := $Sprite2D
 @onready var state : PetState = FallState.new(self)
-
+@onready var menu := $RadialMenu
 @onready var state_label := $Sprite2D/StateDebug
 
 @export var squash_strength := 1.2
@@ -14,6 +14,11 @@ func _ready():
 	super._ready()
 	state.enter_state()
 	pass
+
+func _input(event):
+	super._input(event)
+	if event.is_action_pressed("rightMouseClick"):
+		menu.toggle()
 
 func _process(delta):
 	# Squash/Stretch code

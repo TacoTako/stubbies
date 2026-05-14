@@ -18,12 +18,9 @@ func _ready() -> void:
 	if collision.shape is CircleShape2D:
 		x_margin = collision.shape.radius
 		y_margin = collision.shape.radius
-		print("cir")
 	if collision.shape is RectangleShape2D:
 		x_margin = collision.shape.size.x * 0.5
 		y_margin = collision.shape.size.y * 0.5
-		print("rec")
-	print(x_margin, y_margin)
 	
 	last_position = global_position
 

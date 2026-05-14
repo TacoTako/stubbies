@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://bhw2fq18vtdmc"]
+
+[ext_resource type="Script" uid="uid://boea8xt0gjqov" path="res://scripts/Menu/radial_menu.gd" id="1_67uq7"]
+
+[node name="RadialMenu" type="Node2D" unique_id=1619956170]
+process_mode = 3
+script = ExtResource("1_67uq7")
