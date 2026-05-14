@@ -47,8 +47,6 @@ texture = ExtResource("1_br8qb")
 [node name="Stubby" parent="." unique_id=1583577680 instance=ExtResource("1_gol0p")]
 position = Vector2(763, 373)
 physics_material_override = SubResource("PhysicsMaterial_br8qb")
-squash_strength = 1.2
-release_velocity_multiplier = 1.0
 
 [node name="Clickthrough" parent="." unique_id=2006023397 instance=ExtResource("4_rdp1x")]
 
