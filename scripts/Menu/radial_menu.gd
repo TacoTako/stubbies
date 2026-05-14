@@ -10,6 +10,7 @@ class_name RadialMenu
 const fan_start := -PI / 2
 
 var is_open = false
+var is_animating = false
 
 var buttons : Array = []
 var count := 0
@@ -18,21 +19,26 @@ var count := 0
 func _ready() -> void:
 	for button_node in get_children():
 		buttons.append(button_node)
-		button_node.connect("clicked", connect_button)
-		button_node.scale = Vector2.ZERO
-	
 	count = buttons.size()
 
 func connect_button(button : RadialButton) -> void:
 	button.connect("clicked", button_click)
 
 func toggle() -> void:
+	if is_animating:
+		return
+	
 	if is_open:
 		hide_buttons()
 		is_open = false
 	else:
 		show_buttons()
 		is_open = true
+
+func force_hide() -> void:
+	if is_open:
+		hide_buttons()
+		is_open = false
 
 func show_buttons() -> void:
 	if count == 0:
@@ -43,6 +49,10 @@ func show_buttons() -> void:
 	var row = 0
 	
 	var arc_radians = deg_to_rad(arc_degrees)
+	
+	var tween = create_tween()
+	is_animating = true
+	
 	while remaining > 0:
 		var radius = start_radius + row * row_spacing
 		
@@ -54,7 +64,7 @@ func show_buttons() -> void:
 		# How many fit on this row
 		var row_capacity = max(1, floori(arc_length / spacing))
 		var row_count = min(row_capacity, remaining)
-		
+
 		for i in row_count:
 			var button = buttons[current_index]
 			
@@ -67,20 +77,28 @@ func show_buttons() -> void:
 			button.position = Vector2.ZERO
 			button.scale = Vector2.ZERO
 			
-			button.animate(target_pos, Vector2.ONE, Tween.EASE_OUT, i * 0.05)
+			button.animate(tween, target_pos, Vector2.ONE, Tween.EASE_OUT, i * 0.05)
 			current_index += 1
 			
 		remaining -= row_count
 		row += 1
+		
+	await tween.finished
+	is_animating = false
 
 func hide_buttons() -> void:
 	if count == 0:
 		return
 	
+	var tween = create_tween()
+	is_animating = true
 	for i in count:
 		var button = buttons[i]
 		# Animate outward
-		button.animate(Vector2.ZERO, Vector2.ZERO, Tween.EASE_IN, i * 0.05)
+		button.animate(tween, Vector2.ZERO, Vector2.ZERO, Tween.EASE_IN, i * 0.05)
+	
+	await tween.finished
+	is_animating = false
 
 func button_click(button : RadialButton) -> void :
 	print(button.button_name)

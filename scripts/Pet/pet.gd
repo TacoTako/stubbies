@@ -17,7 +17,7 @@ func _ready():
 
 func _input(event):
 	super._input(event)
-	if event.is_action_pressed("rightMouseClick"):
+	if event.is_action_pressed("rightMouseClick") and !dragging:
 		menu.toggle()
 
 func _process(delta):
@@ -51,6 +51,7 @@ func set_state(new_state : PetState) -> void:
 
 func start_drag() -> void:
 	super.start_drag()
+	menu.force_hide()
 	state.interrupt()
 	state.transition(DragState.new(self))
 

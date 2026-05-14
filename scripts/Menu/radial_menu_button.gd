@@ -8,10 +8,10 @@ signal clicked
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+		get_parent().connect_button(self)
+		scale = Vector2.ZERO
 
-func animate(target_pos : Vector2, target_scale : Vector2, ease, delay : float) -> void:
-	var tween = create_tween()
+func animate(tween, target_pos : Vector2, target_scale : Vector2, ease, delay : float) -> void:
 	tween.set_parallel(true)
 	
 	tween.tween_property(
