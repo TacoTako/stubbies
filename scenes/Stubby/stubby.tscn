@@ -59,5 +59,9 @@ button_name = "Placeholder4"
 [node name="Button2D5" parent="RadialMenu" unique_id=323251924 instance=ExtResource("3_rd5jo")]
 button_name = "Placeholder5"
 
+[node name="Button2D6" parent="RadialMenu" unique_id=1032589700 instance=ExtResource("3_rd5jo")]
+
+[node name="Button2D7" parent="RadialMenu" unique_id=1926367070 instance=ExtResource("3_rd5jo")]
+
 [connection signal="mouse_entered" from="ClickArea" to="." method="_on_area_mouse_entered"]
 [connection signal="mouse_exited" from="ClickArea" to="." method="_on_area_mouse_exited"]

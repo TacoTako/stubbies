@@ -1,8 +1,13 @@
 extends Node2D
 class_name RadialMenu
 
-@export var radius := 120.0
-@export var arc_degrees := 180.0
+@export var button_size := 40.0
+@export var gap := 10.0
+
+@export var start_radius := 100.0
+@export var row_spacing := 70.0
+@export var arc_degrees := 90.0
+const fan_start := -PI / 2
 
 var is_open = false
 
@@ -13,8 +18,8 @@ var count := 0
 func _ready() -> void:
 	for button_node in get_children():
 		buttons.append(button_node)
-		connect_button(button_node)
-		button_node.visible = false
+		button_node.connect("clicked", connect_button)
+		button_node.scale = Vector2.ZERO
 	
 	count = buttons.size()
 
@@ -33,32 +38,40 @@ func show_buttons() -> void:
 	if count == 0:
 		return
 		
+	var remaining = buttons.size()
+	var current_index = 0
+	var row = 0
+	
 	var arc_radians = deg_to_rad(arc_degrees)
-	for i in count:
-		var button = buttons[i]
+	while remaining > 0:
+		var radius = start_radius + row * row_spacing
 		
-		 # Spread buttons evenly across the arc
-		var t = 0.0 if count == 1 else float(i) / (count - 1)
+		# Arc length available in this row
+		var arc_length = radius * arc_radians
+		# Space needed per button
+		var spacing = button_size + gap
 		
-		# Angle range centered around upward direction
-		var angle = -PI / 2 + lerp(-arc_radians / 2, arc_radians / 2, t)
+		# How many fit on this row
+		var row_capacity = max(1, floori(arc_length / spacing))
+		var row_count = min(row_capacity, remaining)
 		
-		var target_pos = Vector2(cos(angle), sin(angle)) * radius
-		
-		# Start from center
-		button.position = Vector2.ZERO
-		button.scale = Vector2.ZERO
-		
-		button.visible = true
-		# Animate outward
-		var tween = create_tween()
-		tween.set_parallel(true)
-		
-		tween.tween_property(button, "position" ,target_pos, 0.25
-			).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-		
-		tween.tween_property(button, "scale", Vector2.ONE, 0.2)
-		tween.tween_interval(i * 0.03)
+		for i in row_count:
+			var button = buttons[current_index]
+			
+			# Even distribution across arc
+			var t = float(i + 0.5) / (row_count) if row_count < 3 else float(i) / (row_count - 1)
+			
+			var angle = fan_start + lerp(0.0, arc_radians, t)
+			var target_pos = Vector2(cos(angle), sin(angle)) * radius
+			
+			button.position = Vector2.ZERO
+			button.scale = Vector2.ZERO
+			
+			button.animate(target_pos, Vector2.ONE, Tween.EASE_OUT, i * 0.05)
+			current_index += 1
+			
+		remaining -= row_count
+		row += 1
 
 func hide_buttons() -> void:
 	if count == 0:
@@ -67,15 +80,7 @@ func hide_buttons() -> void:
 	for i in count:
 		var button = buttons[i]
 		# Animate outward
-		var tween = create_tween()
-		tween.set_parallel(true)
-		
-		tween.tween_property(button, "position" ,Vector2.ZERO, 0.25
-			).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
-		
-		tween.tween_property(button, "scale", Vector2.ZERO, 0.2)
-		tween.tween_interval(i * 0.03)
-	
+		button.animate(Vector2.ZERO, Vector2.ZERO, Tween.EASE_IN, i * 0.05)
 
 func button_click(button : RadialButton) -> void :
 	print(button.button_name)
