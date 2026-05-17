@@ -28,5 +28,4 @@ func exit_state() -> void:
 func transition(next : PetState) -> void:
 	exit_state()
 	pet.set_state(next)
-	next.enter_state()
 	self.queue_free()

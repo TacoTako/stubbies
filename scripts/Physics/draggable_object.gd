@@ -49,32 +49,37 @@ func _physics_process(delta):
 	last_position = global_position
 
 func get_restricted_mouse_pos() -> Vector2:
-	var mouse_pos = get_global_mouse_position()
-	mouse_pos.x = clamp(
-		mouse_pos.x,
+	return pad_working_area(get_global_mouse_position())
+
+func pad_working_area(target: Vector2) -> Vector2:
+	target.x = clamp(
+		target.x,
 		0 + x_margin,
 		ScreenSize.screen_size.x - x_margin
 		)
 		
-	mouse_pos.y = clamp(
-		mouse_pos.y,
+	target.y = clamp(
+		target.y,
 		0 + y_margin,
 		ScreenSize.screen_size.y - y_margin
 		)
-	return mouse_pos
+	return target
 
 func start_drag() -> void:
 	dragging = true
-	freeze = true
+	set_forces(false)
 
 func finish_drag() -> void:
 	dragging = false
-	freeze = false
+	set_forces(true)
 	linear_velocity = tracked_velocity * release_velocity_multiplier
+
+## If true, turn on rigidbody physics, and off otherwise
+func set_forces(on : bool) -> void:
+	freeze = !on
 
 func _on_area_mouse_entered() -> void:
 	hovered = true
-
 
 func _on_area_mouse_exited() -> void:
 	hovered = false

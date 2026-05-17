@@ -5,6 +5,7 @@ class_name Pet
 @onready var state : PetState = FallState.new(self)
 @onready var menu := $RadialMenu
 @onready var state_label := $Sprite2D/StateDebug
+@onready var timer_label := $Sprite2D/TimerDebug
 
 @export var squash_strength := 1.2
 
@@ -25,7 +26,8 @@ func _process(delta):
 	sprite.scale = scale.lerp(target_scale, delta * 15.0)
 	# Slowly return to normal size
 	target_scale = target_scale.lerp(Vector2.ONE, delta * 10.0)
-	state.handle_state()
+	if state:
+		state.handle_state()
 
 func _integrate_forces(state):
 	for i in state.get_contact_count():
@@ -46,7 +48,10 @@ func _integrate_forces(state):
 		break
 
 func set_state(new_state : PetState) -> void:
+	if self.state:
+		self.state.queue_free()
 	self.state = new_state
+	add_child(new_state)
 	state.enter_state()
 
 func start_drag() -> void:

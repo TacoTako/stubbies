@@ -34,10 +34,17 @@ shape = SubResource("CircleShape2D_rd5jo")
 texture = ExtResource("1_7m8uc")
 
 [node name="StateDebug" type="Label" parent="Sprite2D" unique_id=324306844]
-offset_top = -94.365
+offset_top = -97.025
 offset_right = 40.0
-offset_bottom = -71.365
+offset_bottom = -74.025
 text = "State"
+
+[node name="TimerDebug" type="Label" parent="Sprite2D" unique_id=1598628515]
+offset_left = -66.935
+offset_top = -97.025
+offset_right = -26.934998
+offset_bottom = -74.025
+text = "0.0"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2097494109]
 shape = SubResource("CircleShape2D_xhkw8")
@@ -55,13 +62,6 @@ button_name = "Placeholder3"
 
 [node name="Button2D4" parent="RadialMenu" unique_id=93036910 instance=ExtResource("3_rd5jo")]
 button_name = "Placeholder4"
-
-[node name="Button2D5" parent="RadialMenu" unique_id=323251924 instance=ExtResource("3_rd5jo")]
-button_name = "Placeholder5"
-
-[node name="Button2D6" parent="RadialMenu" unique_id=1032589700 instance=ExtResource("3_rd5jo")]
-
-[node name="Button2D7" parent="RadialMenu" unique_id=1926367070 instance=ExtResource("3_rd5jo")]
 
 [connection signal="mouse_entered" from="ClickArea" to="." method="_on_area_mouse_entered"]
 [connection signal="mouse_exited" from="ClickArea" to="." method="_on_area_mouse_exited"]
