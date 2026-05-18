@@ -8,8 +8,9 @@ class_name Pet
 @onready var timer_label := $Sprite2D/TimerDebug
 
 @export var squash_strength := 1.2
-
 var target_scale := Vector2.ONE
+
+var last_contact_normal := Vector2.ZERO
 
 func _ready():
 	super._ready()
@@ -30,6 +31,12 @@ func _process(delta):
 		state.handle_state()
 
 func _integrate_forces(state):
+	if state.get_contact_count() > 0:
+		last_contact_normal = state.get_contact_local_normal(0)
+	else:
+		last_contact_normal = Vector2.ZERO
+		return
+
 	for i in state.get_contact_count():
 		var normal = state.get_contact_local_normal(i)
 

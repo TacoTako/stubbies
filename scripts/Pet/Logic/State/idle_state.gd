@@ -24,11 +24,11 @@ func handle_state() -> void:
 #################### Timer functions for random states ########################
 
 func start_random_timer():
-	timer.wait_time = randf_range(100.0, 240.0)
+	timer.wait_time = randf_range(1.0, 2.0)
 	timer.start()
 
 func _on_timeout():
-	transition(WalkState.new(pet))
+	transition(JumpState.new(pet))
 
 ## called when state is forcefully interrupted (by dragging or otherwise)
 func interrupt() -> void:
