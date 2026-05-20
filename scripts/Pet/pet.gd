@@ -58,12 +58,14 @@ func set_state(new_state : PetState) -> void:
 	if self.state:
 		self.state.queue_free()
 	self.state = new_state
+	if !(new_state is IdleState):
+		menu.force_hide()
+	
 	add_child(new_state)
 	state.enter_state()
 
 func start_drag() -> void:
 	super.start_drag()
-	menu.force_hide()
 	state.interrupt()
 	state.transition(DragState.new(self))
 
