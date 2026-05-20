@@ -30,8 +30,7 @@ func handle_state() -> void:
 			transition(IdleState.new(pet))
 
 		elif abs(normal.x) > 0.7:
-			print("wall not implemented")
-			transition(IdleState.new(pet))
+			transition(ClingState.new(pet))
 	
 	launch_frames -= 1
 	
