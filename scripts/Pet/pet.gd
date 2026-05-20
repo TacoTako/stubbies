@@ -7,9 +7,10 @@ class_name Pet
 @onready var state_label := $Sprite2D/StateDebug
 @onready var timer_label := $Sprite2D/TimerDebug
 
-@export var squash_strength := 1.2
-
+@export var squash_strength := 2.4
 var target_scale := Vector2.ONE
+
+var last_contact_normal := Vector2.ZERO
 
 func _ready():
 	super._ready()
@@ -30,19 +31,22 @@ func _process(delta):
 		state.handle_state()
 
 func _integrate_forces(state):
+	if state.get_contact_count() > 0:
+		last_contact_normal = state.get_contact_local_normal(0)
+	else:
+		last_contact_normal = Vector2.ZERO
+		return
+
 	for i in state.get_contact_count():
 		var normal = state.get_contact_local_normal(i)
 
-		# Normalize collision force
-		var x_force = clamp(abs(linear_velocity.x) / 600.0, 0.0, 2.0)
-		var y_force = clamp(abs(linear_velocity.y) / 600.0, 0.0, 2.0)
 		# Floor / ceiling hit
 		if abs(normal.y) > 0.7:
-			squash(y_force, false)
+			squash(linear_velocity.y, false)
 
 		# Wall hit
 		elif abs(normal.x) > 0.7:
-			squash(x_force, true)
+			squash(linear_velocity.x, true)
 
 		# Only trigger once per frame
 		break
@@ -51,12 +55,14 @@ func set_state(new_state : PetState) -> void:
 	if self.state:
 		self.state.queue_free()
 	self.state = new_state
+	if !(new_state is IdleState):
+		menu.force_hide()
+	
 	add_child(new_state)
 	state.enter_state()
 
 func start_drag() -> void:
 	super.start_drag()
-	menu.force_hide()
 	state.interrupt()
 	state.transition(DragState.new(self))
 
@@ -65,8 +71,9 @@ func finish_drag() -> void:
 	state.transition(FallState.new(self))
 
 func squash(force : float, vertical : bool) -> void:
+	# normalize force
+	force = clamp(abs(force) / 1200.0, 0.0, 1.0)
 	var squash_amount = force * squash_strength
-
 	if !vertical:
 		target_scale = Vector2(
 			1.0 + squash_amount,

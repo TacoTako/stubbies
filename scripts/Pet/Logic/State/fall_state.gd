@@ -12,7 +12,7 @@ func enter_state() -> void:
 
 ## called every frame
 func handle_state() -> void:
-	if pet.linear_velocity.length() == 0:
+	if pet.linear_velocity.length() < 5.0:
 		transition(IdleState.new(pet))
 
 ## called when state is forcefully interrupted (by dragging or otherwise)

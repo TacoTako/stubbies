@@ -1,7 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://b6n06vuxi0r2"]
+[gd_scene format=3 uid="uid://b6n06vuxi0r2"]
 
 [ext_resource type="Script" uid="uid://0753gestcpfg" path="res://scripts/Utils/click_manager.gd" id="1_s0scq"]
 
-[node name="ClickManager" type="Node2D"]
+[node name="ClickManager" type="Node2D" unique_id=761699274]
 script = ExtResource("1_s0scq")
 damping = 4.0
