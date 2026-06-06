@@ -8,6 +8,7 @@ func _init(pet : Pet):
 
 ## sets up data before entering state 
 func enter_state() -> void:
+	pet.sprite.anim("sit")
 	pet.state_label.text = "Falling"
 
 ## called every frame
@@ -17,7 +18,6 @@ func handle_state() -> void:
 
 ## called when state is forcefully interrupted (by dragging or otherwise)
 func interrupt() -> void:
-	exit_state()
 	pass
 
 ## tearsdown data related to state

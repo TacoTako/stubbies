@@ -1,13 +1,16 @@
 extends DraggableObject
 class_name Pet
 
-@onready var sprite := $Sprite2D
+@onready var sprite := $Sprite
 @onready var state : PetState = FallState.new(self)
 @onready var menu := $RadialMenu
-@onready var state_label := $Sprite2D/StateDebug
-@onready var timer_label := $Sprite2D/TimerDebug
+@onready var state_label := $Sprite/StateDebug
+@onready var timer_label := $Sprite/TimerDebug
+
 
 @export var squash_strength := 2.4
+
+var original_scale := 0.465
 var target_scale := Vector2.ONE
 
 var last_contact_normal := Vector2.ZERO
@@ -24,12 +27,22 @@ func _input(event):
 
 func _process(delta):
 	# Squash/Stretch code
-	sprite.scale = scale.lerp(target_scale, delta * 15.0)
+	sprite.scale = scale.lerp(target_scale, delta * 15.0)  * original_scale
 	# Slowly return to normal size
 	target_scale = target_scale.lerp(Vector2.ONE, delta * 10.0)
 	if state:
 		state.handle_state()
 
+func _physics_process(delta):
+	super._physics_process(delta)
+	if dragging:
+		sprite.update_direction(tracked_velocity.x < 0)
+		rotation = lerp_angle(
+			rotation,
+			tracked_velocity.x * 0.0005, # tweak this value
+			10.0 * delta
+		)
+		
 func _integrate_forces(state):
 	if state.get_contact_count() > 0:
 		last_contact_normal = state.get_contact_local_normal(0)
@@ -65,10 +78,13 @@ func start_drag() -> void:
 	super.start_drag()
 	state.interrupt()
 	state.transition(DragState.new(self))
+	lock_rotation = false
 
 func finish_drag() -> void:
 	super.finish_drag()
 	state.transition(FallState.new(self))
+	lock_rotation = true
+	rotation = 0
 
 func squash(force : float, vertical : bool) -> void:
 	# normalize force

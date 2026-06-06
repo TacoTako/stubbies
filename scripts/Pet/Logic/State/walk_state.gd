@@ -11,6 +11,10 @@ func _init(pet : Pet):
 func enter_state() -> void:
 	pet.state_label.text = "Walking"
 	get_random_dest()
+	
+	## Make pet face the right direction
+	pet.sprite.facing_right = destination.x < pet.global_position.x
+	pet.sprite.anim("walk")
 
 ## called every frame
 func handle_state() -> void:
@@ -31,7 +35,6 @@ func get_random_dest() -> void:
 
 ## called when state is forcefully interrupted (by dragging or otherwise)
 func interrupt() -> void:
-	exit_state()
 	pass
 
 ## tearsdown data related to state

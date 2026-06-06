@@ -1,15 +1,64 @@
 [gd_scene format=3 uid="uid://byiol3wynkwyr"]
 
-[ext_resource type="Texture2D" uid="uid://c31ssc70ce45" path="res://icon.svg" id="1_7m8uc"]
 [ext_resource type="Script" uid="uid://u1gxg0fjvuaj" path="res://scripts/Pet/pet.gd" id="1_xhkw8"]
+[ext_resource type="Texture2D" uid="uid://7o28r4j57o01" path="res://assets/Pet/bro/drag.png" id="2_6thg5"]
+[ext_resource type="Texture2D" uid="uid://dydnidpbqshe2" path="res://assets/Pet/bro/stand.png" id="2_l678s"]
+[ext_resource type="Texture2D" uid="uid://c3axyanb3du34" path="res://assets/Pet/bro/sit.png" id="3_fdvo5"]
+[ext_resource type="Texture2D" uid="uid://ck8ge8khf5tw4" path="res://assets/Pet/bro/walk1.png" id="3_hgygn"]
 [ext_resource type="PackedScene" uid="uid://bhw2fq18vtdmc" path="res://scenes/Menu/radial_menu.tscn" id="3_l678s"]
 [ext_resource type="PackedScene" uid="uid://458xvfxcda2s" path="res://scenes/Menu/menu_button.tscn" id="3_rd5jo"]
+[ext_resource type="Texture2D" uid="uid://bltpqqek0d73s" path="res://assets/Pet/bro/walk2.png" id="4_ysyh1"]
+[ext_resource type="Script" uid="uid://c2ret3dprt5cs" path="res://scenes/Stubby/animation_manager.gd" id="7_fdvo5"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_xhkw8"]
 bounce = 0.2
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rd5jo"]
 radius = 67.42
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rd5jo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_6thg5")
+}],
+"loop": true,
+"name": &"drag",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_fdvo5")
+}],
+"loop": true,
+"name": &"sit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_l678s")
+}],
+"loop": true,
+"name": &"stand",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_hgygn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_l678s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ysyh1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_l678s")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xhkw8"]
 radius = 60.0
@@ -30,16 +79,19 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ClickArea" unique_id=739962353]
 shape = SubResource("CircleShape2D_rd5jo")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=696070912]
-texture = ExtResource("1_7m8uc")
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=55859073]
+scale = Vector2(0.465, 0.465)
+sprite_frames = SubResource("SpriteFrames_rd5jo")
+animation = &"sit"
+script = ExtResource("7_fdvo5")
 
-[node name="StateDebug" type="Label" parent="Sprite2D" unique_id=324306844]
+[node name="StateDebug" type="Label" parent="Sprite" unique_id=324306844]
 offset_top = -97.025
 offset_right = 40.0
 offset_bottom = -74.025
 text = "State"
 
-[node name="TimerDebug" type="Label" parent="Sprite2D" unique_id=1598628515]
+[node name="TimerDebug" type="Label" parent="Sprite" unique_id=1598628515]
 offset_left = -66.935
 offset_top = -97.025
 offset_right = -26.934998
