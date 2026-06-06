@@ -14,9 +14,15 @@ func enter_state() -> void:
 	pet.state_label.text = "Jump"
 	init_random_jump()
 	
+	## Make pet face the right direction
+	pet.sprite.facing_right = jump_direction.x < 0
+	pet.sprite.anim("stand")
+	
 	pet.physics_material_override.friction = 0
 	var vel = jump_direction.normalized() * jump_force
 	pet.apply_central_impulse(vel)
+
+
 
 ## called every frame
 func handle_state() -> void:
@@ -41,7 +47,6 @@ func init_random_jump() -> void:
 
 ## called when state is forcefully interrupted (by dragging or otherwise)
 func interrupt() -> void:
-	exit_state()
 	pass
 
 ## tearsdown data related to state
