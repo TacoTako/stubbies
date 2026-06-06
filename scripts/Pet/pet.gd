@@ -36,7 +36,8 @@ func _process(delta):
 func _physics_process(delta):
 	super._physics_process(delta)
 	if dragging:
-		sprite.update_direction(tracked_velocity.x < 0)
+		if abs(tracked_velocity.x) > 50:
+			sprite.update_direction(tracked_velocity.x < 0)
 		rotation = lerp_angle(
 			rotation,
 			tracked_velocity.x * 0.0005, # tweak this value
